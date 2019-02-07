@@ -1,0 +1,54 @@
+mutation {
+  # Create first admin user
+  admin: createUser(data: {
+    username: "admin"
+    password: "$2b$10$dqyYw5XovLjpmkYNiRDEWuwKaRAvLaG45fnXE5b3KTccKZcRPka2m" # "secret42"
+    role: 0
+  }) {
+    id
+  }
+
+  # Create member types
+  memberType1: createMemberType(data: {
+    name: "Thành viên chính thức"
+  }) {
+    id
+  }
+  memberType2: createMemberType(data: {
+    name: "Thành viên mới"
+  }) {
+    id
+  }
+  memberType3: createMemberType(data: {
+    name: "Thành viên X"
+  }) {
+    id
+  }
+
+  # Create activity types
+  actNTT: createActivityType(data: {
+    name: "Nhóm thanh niên"
+  }) {
+    id
+  }
+  actHKT: createActivityType(data: {
+    name: "Học Kinh Thánh"
+  }) {
+    id
+  }
+  actTV: createActivityType(data: {
+    name: "Thăm viếng"
+  }) {
+    id
+  }
+  actTCN: createActivityType(data: {
+    name: "Trường Chúa Nhật"
+  }) {
+    id
+  }
+  actCN: createActivityType(data: {
+    name: "Cầu Nguyện"
+  }) {
+    id
+  }
+}

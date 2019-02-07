@@ -1,0 +1,93 @@
+type User {
+	id: ID! @unique
+	username: String! @unique
+	password: String!
+	role: Int! @default(value: 2)
+	active: Boolean! @default(value: true)
+	profile: Profile
+}
+
+type Profile {
+  id: ID! @unique
+  oldId: ID! @unique
+  firstName: String!
+  lastName: String!
+  gender: Boolean!
+  email: String
+  facebookId: String
+  phoneNumber: String
+  birthday: DateTime
+  joinDate: DateTime
+  dayOfBirth: Int
+  monthOfBirth: Int
+  yearOfBirth: Int
+  address: Address
+  hometown: Province
+  memberType: MemberType
+  group: Group @relation(name: "GroupMembers")
+  leader: Group @relation(name: "GroupLeader")
+  attendances: [ActivityAttendance] @relation(name: "ProfileAttendance")
+}
+
+type MemberType {
+  id: ID! @unique
+  name: String! @unique
+  profiles: [Profile!]
+}
+
+
+type Address {
+  id: ID! @unique
+  no: String
+  street: String
+  commune: Commune
+  district: District
+  province: Province
+}
+
+type Commune {
+  id: ID! @unique
+  name: String!
+  district: District! @relation(name: "CommuneDistrictRef")
+}
+
+type District {
+  id: ID! @unique
+  name: String!
+  communes: [Commune!] @relation(name: "CommuneDistrictRef")
+  province: Province! @relation(name: "DistrictProvinceRef")
+}
+
+type Province {
+  id: ID! @unique
+  name: String!
+  districts: [District!] @relation(name: "DistrictProvinceRef")
+}
+
+type Group {
+  id: ID! @unique
+  name: String!
+  members: [Profile] @relation(name: "GroupMembers")
+  leader: Profile @relation(name: "GroupLeader")
+}
+
+type ActivityType {
+  id: ID! @unique
+  name: String!
+  schedules: [ActivitySchedule] @relation(name: "ActivitySchedule")
+}
+
+type ActivitySchedule {
+  id: ID! @unique
+  start: DateTime!
+  end: DateTime!
+  activity: ActivityType! @relation(name: "ActivitySchedule")
+  attendances: [ActivityAttendance] @relation(name: "ScheduleAttendance")
+}
+
+type ActivityAttendance {
+  id: ID! @unique
+  schedule: ActivitySchedule! @relation(name: "ScheduleAttendance")
+  member: Profile! @relation(name: "ProfileAttendance")
+  presence: Boolean!
+}

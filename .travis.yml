@@ -26,6 +26,8 @@ jobs:
     - stage: compile
       script: "yarn build"
     - stage: deploy
+      if: branch = master
       script: "yarn deploy"
     - stage: release
+      if: branch = master
       script: "yarn semantic-release"

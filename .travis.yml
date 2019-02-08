@@ -13,8 +13,10 @@ node_js:
 
 stages:
   - compile
-  - deploy
-  - release
+  - name: deploy
+    if: branch = master AND type = push
+  - name: release
+    if: branch = master AND type = push
 
 before_install:
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc

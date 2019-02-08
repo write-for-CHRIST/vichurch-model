@@ -1,0 +1,31 @@
+language: node_js
+branches:
+  only:
+    - master
+cache:
+  yarn: true
+  directories:
+    - node_modules
+notifications:
+  email: false
+node_js:
+  - node
+
+stages:
+  - compile
+  - name: deploy
+    if: branch = master AND type = push
+  - name: release
+    if: branch = master AND type = push
+
+before_install:
+  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+
+jobs:
+  include:
+    - stage: compile
+      script: "yarn build"
+    - stage: deploy
+      script: "yarn deploy"
+    - stage: release
+      script: "yarn semantic-release"

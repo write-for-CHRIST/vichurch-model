@@ -1,0 +1,28 @@
+
+language: node_js
+branches:
+  only:
+    - master
+cache:
+  yarn: true
+  directories:
+    - node_modules
+notifications:
+  email: false
+node_js:
+  - node
+stages:
+  - compile
+  - test
+  - name: deploy
+    if: branch = master
+before_install:
+  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+jobs:
+  include:
+    - stage: compile
+      script: "yarn build"
+    - stage: test
+      script: "yarn test"
+    - stage: deploy
+      script: "echo Deploy..."

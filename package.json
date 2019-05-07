@@ -1,6 +1,6 @@
 {
-  "name": "@write-for-christ/vichurch-model",
-  "version": "0.7.0",
+  "name": "@vichurch/model",
+  "version": "0.0.0",
   "description": "ViChurch TypeScript Model",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

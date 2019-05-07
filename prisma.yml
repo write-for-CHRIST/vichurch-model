@@ -1,3 +1,4 @@
+#endpoint: https://prisma.btngiadinh.com/vichurch-btngiadinh/dev
 endpoint: https://prisma.btngiadinh.com/vichurch-btngiadinh/dev
 
 datamodel: datamodel.prisma

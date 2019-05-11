@@ -25,9 +25,13 @@ export interface Exists {
   commune: (where?: CommuneWhereInput) => Promise<boolean>;
   district: (where?: DistrictWhereInput) => Promise<boolean>;
   group: (where?: GroupWhereInput) => Promise<boolean>;
+  internationalization: (
+    where?: InternationalizationWhereInput
+  ) => Promise<boolean>;
   memberType: (where?: MemberTypeWhereInput) => Promise<boolean>;
   profile: (where?: ProfileWhereInput) => Promise<boolean>;
   province: (where?: ProvinceWhereInput) => Promise<boolean>;
+  translationText: (where?: TranslationTextWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -189,6 +193,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => GroupConnectionPromise;
+  internationalization: (
+    where: InternationalizationWhereUniqueInput
+  ) => InternationalizationNullablePromise;
+  internationalizations: (args?: {
+    where?: InternationalizationWhereInput;
+    orderBy?: InternationalizationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Internationalization>;
+  internationalizationsConnection: (args?: {
+    where?: InternationalizationWhereInput;
+    orderBy?: InternationalizationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => InternationalizationConnectionPromise;
   memberType: (where: MemberTypeWhereUniqueInput) => MemberTypeNullablePromise;
   memberTypes: (args?: {
     where?: MemberTypeWhereInput;
@@ -246,6 +271,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => ProvinceConnectionPromise;
+  translationText: (
+    where: TranslationTextWhereUniqueInput
+  ) => TranslationTextNullablePromise;
+  translationTexts: (args?: {
+    where?: TranslationTextWhereInput;
+    orderBy?: TranslationTextOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<TranslationText>;
+  translationTextsConnection: (args?: {
+    where?: TranslationTextWhereInput;
+    orderBy?: TranslationTextOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TranslationTextConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -399,6 +445,28 @@ export interface Prisma {
   }) => GroupPromise;
   deleteGroup: (where: GroupWhereUniqueInput) => GroupPromise;
   deleteManyGroups: (where?: GroupWhereInput) => BatchPayloadPromise;
+  createInternationalization: (
+    data: InternationalizationCreateInput
+  ) => InternationalizationPromise;
+  updateInternationalization: (args: {
+    data: InternationalizationUpdateInput;
+    where: InternationalizationWhereUniqueInput;
+  }) => InternationalizationPromise;
+  updateManyInternationalizations: (args: {
+    data: InternationalizationUpdateManyMutationInput;
+    where?: InternationalizationWhereInput;
+  }) => BatchPayloadPromise;
+  upsertInternationalization: (args: {
+    where: InternationalizationWhereUniqueInput;
+    create: InternationalizationCreateInput;
+    update: InternationalizationUpdateInput;
+  }) => InternationalizationPromise;
+  deleteInternationalization: (
+    where: InternationalizationWhereUniqueInput
+  ) => InternationalizationPromise;
+  deleteManyInternationalizations: (
+    where?: InternationalizationWhereInput
+  ) => BatchPayloadPromise;
   createMemberType: (data: MemberTypeCreateInput) => MemberTypePromise;
   updateMemberType: (args: {
     data: MemberTypeUpdateInput;
@@ -447,6 +515,28 @@ export interface Prisma {
   }) => ProvincePromise;
   deleteProvince: (where: ProvinceWhereUniqueInput) => ProvincePromise;
   deleteManyProvinces: (where?: ProvinceWhereInput) => BatchPayloadPromise;
+  createTranslationText: (
+    data: TranslationTextCreateInput
+  ) => TranslationTextPromise;
+  updateTranslationText: (args: {
+    data: TranslationTextUpdateInput;
+    where: TranslationTextWhereUniqueInput;
+  }) => TranslationTextPromise;
+  updateManyTranslationTexts: (args: {
+    data: TranslationTextUpdateManyMutationInput;
+    where?: TranslationTextWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTranslationText: (args: {
+    where: TranslationTextWhereUniqueInput;
+    create: TranslationTextCreateInput;
+    update: TranslationTextUpdateInput;
+  }) => TranslationTextPromise;
+  deleteTranslationText: (
+    where: TranslationTextWhereUniqueInput
+  ) => TranslationTextPromise;
+  deleteManyTranslationTexts: (
+    where?: TranslationTextWhereInput
+  ) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -493,6 +583,9 @@ export interface Subscription {
   group: (
     where?: GroupSubscriptionWhereInput
   ) => GroupSubscriptionPayloadSubscription;
+  internationalization: (
+    where?: InternationalizationSubscriptionWhereInput
+  ) => InternationalizationSubscriptionPayloadSubscription;
   memberType: (
     where?: MemberTypeSubscriptionWhereInput
   ) => MemberTypeSubscriptionPayloadSubscription;
@@ -502,6 +595,9 @@ export interface Subscription {
   province: (
     where?: ProvinceSubscriptionWhereInput
   ) => ProvinceSubscriptionPayloadSubscription;
+  translationText: (
+    where?: TranslationTextSubscriptionWhereInput
+  ) => TranslationTextSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -618,6 +714,22 @@ export type GroupOrderByInput =
   | "updatedAt_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC";
+
+export type LanguageCode = "VI" | "EN";
+
+export type TranslationTextOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "lang_ASC"
+  | "lang_DESC"
+  | "text_ASC"
+  | "text_DESC";
+
+export type InternationalizationOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "key_ASC"
+  | "key_DESC";
 
 export type MemberTypeOrderByInput =
   | "id_ASC"
@@ -1322,6 +1434,91 @@ export type GroupWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
+export type InternationalizationWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  key?: Maybe<String>;
+}>;
+
+export interface TranslationTextWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  lang?: Maybe<LanguageCode>;
+  lang_not?: Maybe<LanguageCode>;
+  lang_in?: Maybe<LanguageCode[] | LanguageCode>;
+  lang_not_in?: Maybe<LanguageCode[] | LanguageCode>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  localization?: Maybe<InternationalizationWhereInput>;
+  AND?: Maybe<TranslationTextWhereInput[] | TranslationTextWhereInput>;
+  OR?: Maybe<TranslationTextWhereInput[] | TranslationTextWhereInput>;
+  NOT?: Maybe<TranslationTextWhereInput[] | TranslationTextWhereInput>;
+}
+
+export interface InternationalizationWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  key?: Maybe<String>;
+  key_not?: Maybe<String>;
+  key_in?: Maybe<String[] | String>;
+  key_not_in?: Maybe<String[] | String>;
+  key_lt?: Maybe<String>;
+  key_lte?: Maybe<String>;
+  key_gt?: Maybe<String>;
+  key_gte?: Maybe<String>;
+  key_contains?: Maybe<String>;
+  key_not_contains?: Maybe<String>;
+  key_starts_with?: Maybe<String>;
+  key_not_starts_with?: Maybe<String>;
+  key_ends_with?: Maybe<String>;
+  key_not_ends_with?: Maybe<String>;
+  translationTexts_every?: Maybe<TranslationTextWhereInput>;
+  translationTexts_some?: Maybe<TranslationTextWhereInput>;
+  translationTexts_none?: Maybe<TranslationTextWhereInput>;
+  AND?: Maybe<
+    InternationalizationWhereInput[] | InternationalizationWhereInput
+  >;
+  OR?: Maybe<InternationalizationWhereInput[] | InternationalizationWhereInput>;
+  NOT?: Maybe<
+    InternationalizationWhereInput[] | InternationalizationWhereInput
+  >;
+}
+
 export type MemberTypeWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   name?: Maybe<String>;
@@ -1333,6 +1530,10 @@ export type ProfileWhereUniqueInput = AtLeastOne<{
 }>;
 
 export type ProvinceWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type TranslationTextWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -2745,6 +2946,141 @@ export interface GroupUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
+export interface InternationalizationCreateInput {
+  id?: Maybe<ID_Input>;
+  key: String;
+  translationTexts?: Maybe<TranslationTextCreateManyWithoutLocalizationInput>;
+}
+
+export interface TranslationTextCreateManyWithoutLocalizationInput {
+  create?: Maybe<
+    | TranslationTextCreateWithoutLocalizationInput[]
+    | TranslationTextCreateWithoutLocalizationInput
+  >;
+  connect?: Maybe<
+    TranslationTextWhereUniqueInput[] | TranslationTextWhereUniqueInput
+  >;
+}
+
+export interface TranslationTextCreateWithoutLocalizationInput {
+  id?: Maybe<ID_Input>;
+  lang: LanguageCode;
+  text: String;
+}
+
+export interface InternationalizationUpdateInput {
+  key?: Maybe<String>;
+  translationTexts?: Maybe<TranslationTextUpdateManyWithoutLocalizationInput>;
+}
+
+export interface TranslationTextUpdateManyWithoutLocalizationInput {
+  create?: Maybe<
+    | TranslationTextCreateWithoutLocalizationInput[]
+    | TranslationTextCreateWithoutLocalizationInput
+  >;
+  delete?: Maybe<
+    TranslationTextWhereUniqueInput[] | TranslationTextWhereUniqueInput
+  >;
+  connect?: Maybe<
+    TranslationTextWhereUniqueInput[] | TranslationTextWhereUniqueInput
+  >;
+  set?: Maybe<
+    TranslationTextWhereUniqueInput[] | TranslationTextWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    TranslationTextWhereUniqueInput[] | TranslationTextWhereUniqueInput
+  >;
+  update?: Maybe<
+    | TranslationTextUpdateWithWhereUniqueWithoutLocalizationInput[]
+    | TranslationTextUpdateWithWhereUniqueWithoutLocalizationInput
+  >;
+  upsert?: Maybe<
+    | TranslationTextUpsertWithWhereUniqueWithoutLocalizationInput[]
+    | TranslationTextUpsertWithWhereUniqueWithoutLocalizationInput
+  >;
+  deleteMany?: Maybe<
+    TranslationTextScalarWhereInput[] | TranslationTextScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | TranslationTextUpdateManyWithWhereNestedInput[]
+    | TranslationTextUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TranslationTextUpdateWithWhereUniqueWithoutLocalizationInput {
+  where: TranslationTextWhereUniqueInput;
+  data: TranslationTextUpdateWithoutLocalizationDataInput;
+}
+
+export interface TranslationTextUpdateWithoutLocalizationDataInput {
+  lang?: Maybe<LanguageCode>;
+  text?: Maybe<String>;
+}
+
+export interface TranslationTextUpsertWithWhereUniqueWithoutLocalizationInput {
+  where: TranslationTextWhereUniqueInput;
+  update: TranslationTextUpdateWithoutLocalizationDataInput;
+  create: TranslationTextCreateWithoutLocalizationInput;
+}
+
+export interface TranslationTextScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  lang?: Maybe<LanguageCode>;
+  lang_not?: Maybe<LanguageCode>;
+  lang_in?: Maybe<LanguageCode[] | LanguageCode>;
+  lang_not_in?: Maybe<LanguageCode[] | LanguageCode>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    TranslationTextScalarWhereInput[] | TranslationTextScalarWhereInput
+  >;
+  OR?: Maybe<
+    TranslationTextScalarWhereInput[] | TranslationTextScalarWhereInput
+  >;
+  NOT?: Maybe<
+    TranslationTextScalarWhereInput[] | TranslationTextScalarWhereInput
+  >;
+}
+
+export interface TranslationTextUpdateManyWithWhereNestedInput {
+  where: TranslationTextScalarWhereInput;
+  data: TranslationTextUpdateManyDataInput;
+}
+
+export interface TranslationTextUpdateManyDataInput {
+  lang?: Maybe<LanguageCode>;
+  text?: Maybe<String>;
+}
+
+export interface InternationalizationUpdateManyMutationInput {
+  key?: Maybe<String>;
+}
+
 export interface MemberTypeCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
@@ -2902,6 +3238,52 @@ export interface ProvinceUpdateInput {
 
 export interface ProvinceUpdateManyMutationInput {
   name?: Maybe<String>;
+}
+
+export interface TranslationTextCreateInput {
+  id?: Maybe<ID_Input>;
+  lang: LanguageCode;
+  text: String;
+  localization: InternationalizationCreateOneWithoutTranslationTextsInput;
+}
+
+export interface InternationalizationCreateOneWithoutTranslationTextsInput {
+  create?: Maybe<InternationalizationCreateWithoutTranslationTextsInput>;
+  connect?: Maybe<InternationalizationWhereUniqueInput>;
+}
+
+export interface InternationalizationCreateWithoutTranslationTextsInput {
+  id?: Maybe<ID_Input>;
+  key: String;
+}
+
+export interface TranslationTextUpdateInput {
+  lang?: Maybe<LanguageCode>;
+  text?: Maybe<String>;
+  localization?: Maybe<
+    InternationalizationUpdateOneRequiredWithoutTranslationTextsInput
+  >;
+}
+
+export interface InternationalizationUpdateOneRequiredWithoutTranslationTextsInput {
+  create?: Maybe<InternationalizationCreateWithoutTranslationTextsInput>;
+  update?: Maybe<InternationalizationUpdateWithoutTranslationTextsDataInput>;
+  upsert?: Maybe<InternationalizationUpsertWithoutTranslationTextsInput>;
+  connect?: Maybe<InternationalizationWhereUniqueInput>;
+}
+
+export interface InternationalizationUpdateWithoutTranslationTextsDataInput {
+  key?: Maybe<String>;
+}
+
+export interface InternationalizationUpsertWithoutTranslationTextsInput {
+  update: InternationalizationUpdateWithoutTranslationTextsDataInput;
+  create: InternationalizationCreateWithoutTranslationTextsInput;
+}
+
+export interface TranslationTextUpdateManyMutationInput {
+  lang?: Maybe<LanguageCode>;
+  text?: Maybe<String>;
 }
 
 export interface UserCreateInput {
@@ -3072,6 +3454,26 @@ export interface GroupSubscriptionWhereInput {
   NOT?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
 }
 
+export interface InternationalizationSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<InternationalizationWhereInput>;
+  AND?: Maybe<
+    | InternationalizationSubscriptionWhereInput[]
+    | InternationalizationSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | InternationalizationSubscriptionWhereInput[]
+    | InternationalizationSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | InternationalizationSubscriptionWhereInput[]
+    | InternationalizationSubscriptionWhereInput
+  >;
+}
+
 export interface MemberTypeSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -3112,6 +3514,26 @@ export interface ProvinceSubscriptionWhereInput {
   OR?: Maybe<ProvinceSubscriptionWhereInput[] | ProvinceSubscriptionWhereInput>;
   NOT?: Maybe<
     ProvinceSubscriptionWhereInput[] | ProvinceSubscriptionWhereInput
+  >;
+}
+
+export interface TranslationTextSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TranslationTextWhereInput>;
+  AND?: Maybe<
+    | TranslationTextSubscriptionWhereInput[]
+    | TranslationTextSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | TranslationTextSubscriptionWhereInput[]
+    | TranslationTextSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | TranslationTextSubscriptionWhereInput[]
+    | TranslationTextSubscriptionWhereInput
   >;
 }
 
@@ -4150,6 +4572,152 @@ export interface AggregateGroupSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface Internationalization {
+  id: ID_Output;
+  key: String;
+}
+
+export interface InternationalizationPromise
+  extends Promise<Internationalization>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  key: () => Promise<String>;
+  translationTexts: <T = FragmentableArray<TranslationText>>(args?: {
+    where?: TranslationTextWhereInput;
+    orderBy?: TranslationTextOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface InternationalizationSubscription
+  extends Promise<AsyncIterator<Internationalization>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  key: () => Promise<AsyncIterator<String>>;
+  translationTexts: <
+    T = Promise<AsyncIterator<TranslationTextSubscription>>
+  >(args?: {
+    where?: TranslationTextWhereInput;
+    orderBy?: TranslationTextOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface InternationalizationNullablePromise
+  extends Promise<Internationalization | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  key: () => Promise<String>;
+  translationTexts: <T = FragmentableArray<TranslationText>>(args?: {
+    where?: TranslationTextWhereInput;
+    orderBy?: TranslationTextOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface TranslationText {
+  id: ID_Output;
+  lang: LanguageCode;
+  text: String;
+}
+
+export interface TranslationTextPromise
+  extends Promise<TranslationText>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  lang: () => Promise<LanguageCode>;
+  text: () => Promise<String>;
+  localization: <T = InternationalizationPromise>() => T;
+}
+
+export interface TranslationTextSubscription
+  extends Promise<AsyncIterator<TranslationText>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  lang: () => Promise<AsyncIterator<LanguageCode>>;
+  text: () => Promise<AsyncIterator<String>>;
+  localization: <T = InternationalizationSubscription>() => T;
+}
+
+export interface TranslationTextNullablePromise
+  extends Promise<TranslationText | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  lang: () => Promise<LanguageCode>;
+  text: () => Promise<String>;
+  localization: <T = InternationalizationPromise>() => T;
+}
+
+export interface InternationalizationConnection {
+  pageInfo: PageInfo;
+  edges: InternationalizationEdge[];
+}
+
+export interface InternationalizationConnectionPromise
+  extends Promise<InternationalizationConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<InternationalizationEdge>>() => T;
+  aggregate: <T = AggregateInternationalizationPromise>() => T;
+}
+
+export interface InternationalizationConnectionSubscription
+  extends Promise<AsyncIterator<InternationalizationConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<InternationalizationEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateInternationalizationSubscription>() => T;
+}
+
+export interface InternationalizationEdge {
+  node: Internationalization;
+  cursor: String;
+}
+
+export interface InternationalizationEdgePromise
+  extends Promise<InternationalizationEdge>,
+    Fragmentable {
+  node: <T = InternationalizationPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface InternationalizationEdgeSubscription
+  extends Promise<AsyncIterator<InternationalizationEdge>>,
+    Fragmentable {
+  node: <T = InternationalizationSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateInternationalization {
+  count: Int;
+}
+
+export interface AggregateInternationalizationPromise
+  extends Promise<AggregateInternationalization>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateInternationalizationSubscription
+  extends Promise<AsyncIterator<AggregateInternationalization>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface MemberTypeConnection {
   pageInfo: PageInfo;
   edges: MemberTypeEdge[];
@@ -4312,6 +4880,62 @@ export interface AggregateProvincePromise
 
 export interface AggregateProvinceSubscription
   extends Promise<AsyncIterator<AggregateProvince>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TranslationTextConnection {
+  pageInfo: PageInfo;
+  edges: TranslationTextEdge[];
+}
+
+export interface TranslationTextConnectionPromise
+  extends Promise<TranslationTextConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TranslationTextEdge>>() => T;
+  aggregate: <T = AggregateTranslationTextPromise>() => T;
+}
+
+export interface TranslationTextConnectionSubscription
+  extends Promise<AsyncIterator<TranslationTextConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TranslationTextEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTranslationTextSubscription>() => T;
+}
+
+export interface TranslationTextEdge {
+  node: TranslationText;
+  cursor: String;
+}
+
+export interface TranslationTextEdgePromise
+  extends Promise<TranslationTextEdge>,
+    Fragmentable {
+  node: <T = TranslationTextPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TranslationTextEdgeSubscription
+  extends Promise<AsyncIterator<TranslationTextEdge>>,
+    Fragmentable {
+  node: <T = TranslationTextSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTranslationText {
+  count: Int;
+}
+
+export interface AggregateTranslationTextPromise
+  extends Promise<AggregateTranslationText>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTranslationTextSubscription
+  extends Promise<AsyncIterator<AggregateTranslationText>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -4789,6 +5413,50 @@ export interface GroupPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface InternationalizationSubscriptionPayload {
+  mutation: MutationType;
+  node: Internationalization;
+  updatedFields: String[];
+  previousValues: InternationalizationPreviousValues;
+}
+
+export interface InternationalizationSubscriptionPayloadPromise
+  extends Promise<InternationalizationSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = InternationalizationPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = InternationalizationPreviousValuesPromise>() => T;
+}
+
+export interface InternationalizationSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<InternationalizationSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = InternationalizationSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = InternationalizationPreviousValuesSubscription>() => T;
+}
+
+export interface InternationalizationPreviousValues {
+  id: ID_Output;
+  key: String;
+}
+
+export interface InternationalizationPreviousValuesPromise
+  extends Promise<InternationalizationPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  key: () => Promise<String>;
+}
+
+export interface InternationalizationPreviousValuesSubscription
+  extends Promise<AsyncIterator<InternationalizationPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  key: () => Promise<AsyncIterator<String>>;
+}
+
 export interface MemberTypeSubscriptionPayload {
   mutation: MutationType;
   node: MemberType;
@@ -4969,6 +5637,53 @@ export interface ProvincePreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface TranslationTextSubscriptionPayload {
+  mutation: MutationType;
+  node: TranslationText;
+  updatedFields: String[];
+  previousValues: TranslationTextPreviousValues;
+}
+
+export interface TranslationTextSubscriptionPayloadPromise
+  extends Promise<TranslationTextSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TranslationTextPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TranslationTextPreviousValuesPromise>() => T;
+}
+
+export interface TranslationTextSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TranslationTextSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TranslationTextSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TranslationTextPreviousValuesSubscription>() => T;
+}
+
+export interface TranslationTextPreviousValues {
+  id: ID_Output;
+  lang: LanguageCode;
+  text: String;
+}
+
+export interface TranslationTextPreviousValuesPromise
+  extends Promise<TranslationTextPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  lang: () => Promise<LanguageCode>;
+  text: () => Promise<String>;
+}
+
+export interface TranslationTextPreviousValuesSubscription
+  extends Promise<AsyncIterator<TranslationTextPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  lang: () => Promise<AsyncIterator<LanguageCode>>;
+  text: () => Promise<AsyncIterator<String>>;
+}
+
 export interface UserSubscriptionPayload {
   mutation: MutationType;
   node: User;
@@ -5108,6 +5823,18 @@ export const models: Model[] = [
   },
   {
     name: "ActivityAttendance",
+    embedded: false
+  },
+  {
+    name: "LanguageCode",
+    embedded: false
+  },
+  {
+    name: "TranslationText",
+    embedded: false
+  },
+  {
+    name: "Internationalization",
     embedded: false
   }
 ];

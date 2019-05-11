@@ -111,3 +111,21 @@ type ActivityAttendance {
 	updatedAt: DateTime! @updatedAt
 	createdAt: DateTime! @createdAt
 }
+
+enum LanguageCode {
+  VI,
+  EN
+}
+
+type TranslationText {
+  id: ID! @id
+  lang: LanguageCode!
+  text: String!
+  localization: Internationalization! @relation(name: "LocalizationTranslation")
+}
+
+type Internationalization {
+  id: ID! @id
+  key: String! @unique
+  translationTexts: [TranslationText!]! @relation(link: "TABLE", name: "InternationalizationTranslation")
+}

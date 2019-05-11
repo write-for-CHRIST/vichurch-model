@@ -117,15 +117,15 @@ enum LanguageCode {
   EN
 }
 
-type TranslationText {
+type Translation {
   id: ID! @id
   lang: LanguageCode!
   text: String!
-  localization: Internationalization! @relation(name: "LocalizationTranslation")
+  localization: Localization! @relation(name: "LocalizationTranslation")
 }
 
-type Internationalization {
+type Localization {
   id: ID! @id
   key: String! @unique
-  translationTexts: [TranslationText!]! @relation(link: "TABLE", name: "InternationalizationTranslation")
+  translations: [TranslationText!]! @relation(link: "TABLE", name: "LocalizationTranslation")
 }

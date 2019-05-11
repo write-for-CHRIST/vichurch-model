@@ -5,111 +5,109 @@ type User {
 	role: Int! @default(value: 2)
 	active: Boolean! @default(value: true)
 	profile: Profile
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
 type Profile {
-  id: ID! @id
-  oldId: ID! @unique
-  firstName: String!
-  lastName: String!
-  gender: Boolean!
-  email: String
-  facebookId: String
-  phoneNumber: String
-  birthday: DateTime
-  joinDate: DateTime
-  dayOfBirth: Int
-  monthOfBirth: Int
-  yearOfBirth: Int
-  address: Address
-  hometown: Province
-  memberType: MemberType
-  group: Group @relation(name: "GroupMembers")
-  leader: Group @relation(name: "GroupLeader")
-  attendances: [ActivityAttendance] @relation(name: "ProfileAttendance")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	oldId: ID! @unique
+  fullName: String!
+	gender: Boolean!
+	email: String
+	facebookId: String
+	phoneNumber: String
+	birthday: DateTime
+	joinDate: DateTime
+	dayOfBirth: Int
+	monthOfBirth: Int
+	yearOfBirth: Int
+	address: Address
+	hometown: Province
+	memberType: MemberType
+	group: Group @relation(link: "TABLE", name: "GroupMembers")
+	leader: Group @relation(link: "TABLE", name: "GroupLeader")
+	attendances: [ActivityAttendance] @relation(name: "ProfileAttendance")
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
 type MemberType {
-  id: ID! @id
-  name: String! @unique
-  profiles: [Profile!]
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	name: String! @unique
+	profiles: [Profile!]
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
-
 type Address {
-  id: ID! @id
-  no: String
-  street: String
-  commune: Commune
-  district: District
-  province: Province
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	no: String
+	street: String
+	commune: Commune
+	district: District
+	province: Province
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
 type Commune {
-  id: ID! @id
-  name: String!
-  district: District! @relation(name: "CommuneDistrictRef")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	name: String!
+	district: District! @relation(name: "CommuneDistrictRef")
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
 type District {
-  id: ID! @id
-  name: String!
-  communes: [Commune!] @relation(name: "CommuneDistrictRef")
-  province: Province! @relation(name: "DistrictProvinceRef")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	name: String!
+	communes: [Commune!] @relation(name: "CommuneDistrictRef")
+	province: Province! @relation(name: "DistrictProvinceRef")
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
 type Province {
-  id: ID! @id
-  name: String!
-  districts: [District!] @relation(name: "DistrictProvinceRef")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	name: String!
+	districts: [District!] @relation(name: "DistrictProvinceRef")
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
 type Group {
-  id: ID! @id
-  name: String!
-  members: [Profile] @relation(name: "GroupMembers")
-  leader: Profile @relation(link: TABLE, name: "GroupLeader")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	name: String!
+	members: [Profile] @relation(name: "GroupMembers")
+	leader: Profile @relation(link: TABLE, name: "GroupLeader")
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
 type ActivityType {
-  id: ID! @id
-  name: String!
-  schedules: [ActivitySchedule] @relation(name: "ActivitySchedule")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	name: String!
+	schedules: [ActivitySchedule] @relation(name: "ActivitySchedule")
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
 type ActivitySchedule {
-  id: ID! @id
-  start: DateTime!
-  end: DateTime!
-  activity: ActivityType! @relation(name: "ActivitySchedule")
-  attendances: [ActivityAttendance] @relation(name: "ScheduleAttendance")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	start: DateTime!
+	end: DateTime!
+	activity: ActivityType! @relation(name: "ActivitySchedule")
+	attendances: [ActivityAttendance] @relation(name: "ScheduleAttendance")
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }
 
 type ActivityAttendance {
-  id: ID! @id
-  schedule: ActivitySchedule! @relation(name: "ScheduleAttendance")
-  member: Profile! @relation(name: "ProfileAttendance")
-  presence: Boolean!
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+	id: ID! @id
+	schedule: ActivitySchedule! @relation(name: "ScheduleAttendance")
+	member: Profile! @relation(name: "ProfileAttendance")
+	presence: Boolean!
+	updatedAt: DateTime! @updatedAt
+	createdAt: DateTime! @createdAt
 }

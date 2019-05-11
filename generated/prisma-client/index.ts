@@ -562,10 +562,8 @@ export type ProfileOrderByInput =
   | "id_DESC"
   | "oldId_ASC"
   | "oldId_DESC"
-  | "firstName_ASC"
-  | "firstName_DESC"
-  | "lastName_ASC"
-  | "lastName_DESC"
+  | "fullName_ASC"
+  | "fullName_DESC"
   | "gender_ASC"
   | "gender_DESC"
   | "email_ASC"
@@ -841,34 +839,20 @@ export interface ProfileWhereInput {
   oldId_not_starts_with?: Maybe<ID_Input>;
   oldId_ends_with?: Maybe<ID_Input>;
   oldId_not_ends_with?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  firstName_not?: Maybe<String>;
-  firstName_in?: Maybe<String[] | String>;
-  firstName_not_in?: Maybe<String[] | String>;
-  firstName_lt?: Maybe<String>;
-  firstName_lte?: Maybe<String>;
-  firstName_gt?: Maybe<String>;
-  firstName_gte?: Maybe<String>;
-  firstName_contains?: Maybe<String>;
-  firstName_not_contains?: Maybe<String>;
-  firstName_starts_with?: Maybe<String>;
-  firstName_not_starts_with?: Maybe<String>;
-  firstName_ends_with?: Maybe<String>;
-  firstName_not_ends_with?: Maybe<String>;
-  lastName?: Maybe<String>;
-  lastName_not?: Maybe<String>;
-  lastName_in?: Maybe<String[] | String>;
-  lastName_not_in?: Maybe<String[] | String>;
-  lastName_lt?: Maybe<String>;
-  lastName_lte?: Maybe<String>;
-  lastName_gt?: Maybe<String>;
-  lastName_gte?: Maybe<String>;
-  lastName_contains?: Maybe<String>;
-  lastName_not_contains?: Maybe<String>;
-  lastName_starts_with?: Maybe<String>;
-  lastName_not_starts_with?: Maybe<String>;
-  lastName_ends_with?: Maybe<String>;
-  lastName_not_ends_with?: Maybe<String>;
+  fullName?: Maybe<String>;
+  fullName_not?: Maybe<String>;
+  fullName_in?: Maybe<String[] | String>;
+  fullName_not_in?: Maybe<String[] | String>;
+  fullName_lt?: Maybe<String>;
+  fullName_lte?: Maybe<String>;
+  fullName_gt?: Maybe<String>;
+  fullName_gte?: Maybe<String>;
+  fullName_contains?: Maybe<String>;
+  fullName_not_contains?: Maybe<String>;
+  fullName_starts_with?: Maybe<String>;
+  fullName_not_starts_with?: Maybe<String>;
+  fullName_ends_with?: Maybe<String>;
+  fullName_not_ends_with?: Maybe<String>;
   gender?: Maybe<Boolean>;
   gender_not?: Maybe<Boolean>;
   email?: Maybe<String>;
@@ -1469,8 +1453,7 @@ export interface ProfileCreateOneWithoutAttendancesInput {
 export interface ProfileCreateWithoutAttendancesInput {
   id?: Maybe<ID_Input>;
   oldId: ID_Input;
-  firstName: String;
-  lastName: String;
+  fullName: String;
   gender: Boolean;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -1610,8 +1593,7 @@ export interface ProfileCreateOneWithoutLeaderInput {
 export interface ProfileCreateWithoutLeaderInput {
   id?: Maybe<ID_Input>;
   oldId: ID_Input;
-  firstName: String;
-  lastName: String;
+  fullName: String;
   gender: Boolean;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -1665,8 +1647,7 @@ export interface ProfileCreateManyWithoutGroupInput {
 export interface ProfileCreateWithoutGroupInput {
   id?: Maybe<ID_Input>;
   oldId: ID_Input;
-  firstName: String;
-  lastName: String;
+  fullName: String;
   gender: Boolean;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -1732,8 +1713,7 @@ export interface ProfileUpdateOneRequiredWithoutAttendancesInput {
 
 export interface ProfileUpdateWithoutAttendancesDataInput {
   oldId?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
+  fullName?: Maybe<String>;
   gender?: Maybe<Boolean>;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -2101,8 +2081,7 @@ export interface ProfileUpdateOneWithoutLeaderInput {
 
 export interface ProfileUpdateWithoutLeaderDataInput {
   oldId?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
+  fullName?: Maybe<String>;
   gender?: Maybe<Boolean>;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -2276,8 +2255,7 @@ export interface ProfileUpdateWithWhereUniqueWithoutGroupInput {
 
 export interface ProfileUpdateWithoutGroupDataInput {
   oldId?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
+  fullName?: Maybe<String>;
   gender?: Maybe<Boolean>;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -2329,34 +2307,20 @@ export interface ProfileScalarWhereInput {
   oldId_not_starts_with?: Maybe<ID_Input>;
   oldId_ends_with?: Maybe<ID_Input>;
   oldId_not_ends_with?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  firstName_not?: Maybe<String>;
-  firstName_in?: Maybe<String[] | String>;
-  firstName_not_in?: Maybe<String[] | String>;
-  firstName_lt?: Maybe<String>;
-  firstName_lte?: Maybe<String>;
-  firstName_gt?: Maybe<String>;
-  firstName_gte?: Maybe<String>;
-  firstName_contains?: Maybe<String>;
-  firstName_not_contains?: Maybe<String>;
-  firstName_starts_with?: Maybe<String>;
-  firstName_not_starts_with?: Maybe<String>;
-  firstName_ends_with?: Maybe<String>;
-  firstName_not_ends_with?: Maybe<String>;
-  lastName?: Maybe<String>;
-  lastName_not?: Maybe<String>;
-  lastName_in?: Maybe<String[] | String>;
-  lastName_not_in?: Maybe<String[] | String>;
-  lastName_lt?: Maybe<String>;
-  lastName_lte?: Maybe<String>;
-  lastName_gt?: Maybe<String>;
-  lastName_gte?: Maybe<String>;
-  lastName_contains?: Maybe<String>;
-  lastName_not_contains?: Maybe<String>;
-  lastName_starts_with?: Maybe<String>;
-  lastName_not_starts_with?: Maybe<String>;
-  lastName_ends_with?: Maybe<String>;
-  lastName_not_ends_with?: Maybe<String>;
+  fullName?: Maybe<String>;
+  fullName_not?: Maybe<String>;
+  fullName_in?: Maybe<String[] | String>;
+  fullName_not_in?: Maybe<String[] | String>;
+  fullName_lt?: Maybe<String>;
+  fullName_lte?: Maybe<String>;
+  fullName_gt?: Maybe<String>;
+  fullName_gte?: Maybe<String>;
+  fullName_contains?: Maybe<String>;
+  fullName_not_contains?: Maybe<String>;
+  fullName_starts_with?: Maybe<String>;
+  fullName_not_starts_with?: Maybe<String>;
+  fullName_ends_with?: Maybe<String>;
+  fullName_not_ends_with?: Maybe<String>;
   gender?: Maybe<Boolean>;
   gender_not?: Maybe<Boolean>;
   email?: Maybe<String>;
@@ -2469,8 +2433,7 @@ export interface ProfileUpdateManyWithWhereNestedInput {
 
 export interface ProfileUpdateManyDataInput {
   oldId?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
+  fullName?: Maybe<String>;
   gender?: Maybe<Boolean>;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -2798,8 +2761,7 @@ export interface ProfileCreateManyWithoutMemberTypeInput {
 export interface ProfileCreateWithoutMemberTypeInput {
   id?: Maybe<ID_Input>;
   oldId: ID_Input;
-  firstName: String;
-  lastName: String;
+  fullName: String;
   gender: Boolean;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -2851,8 +2813,7 @@ export interface ProfileUpdateWithWhereUniqueWithoutMemberTypeInput {
 
 export interface ProfileUpdateWithoutMemberTypeDataInput {
   oldId?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
+  fullName?: Maybe<String>;
   gender?: Maybe<Boolean>;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -2882,8 +2843,7 @@ export interface MemberTypeUpdateManyMutationInput {
 export interface ProfileCreateInput {
   id?: Maybe<ID_Input>;
   oldId: ID_Input;
-  firstName: String;
-  lastName: String;
+  fullName: String;
   gender: Boolean;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -2903,8 +2863,7 @@ export interface ProfileCreateInput {
 
 export interface ProfileUpdateInput {
   oldId?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
+  fullName?: Maybe<String>;
   gender?: Maybe<Boolean>;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -2924,8 +2883,7 @@ export interface ProfileUpdateInput {
 
 export interface ProfileUpdateManyMutationInput {
   oldId?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
+  fullName?: Maybe<String>;
   gender?: Maybe<Boolean>;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -2979,8 +2937,7 @@ export interface ProfileUpdateOneInput {
 
 export interface ProfileUpdateDataInput {
   oldId?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
+  fullName?: Maybe<String>;
   gender?: Maybe<Boolean>;
   email?: Maybe<String>;
   facebookId?: Maybe<String>;
@@ -3347,8 +3304,7 @@ export interface ActivityTypeNullablePromise
 export interface Profile {
   id: ID_Output;
   oldId: ID_Output;
-  firstName: String;
-  lastName: String;
+  fullName: String;
   gender: Boolean;
   email?: String;
   facebookId?: String;
@@ -3365,8 +3321,7 @@ export interface Profile {
 export interface ProfilePromise extends Promise<Profile>, Fragmentable {
   id: () => Promise<ID_Output>;
   oldId: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
+  fullName: () => Promise<String>;
   gender: () => Promise<Boolean>;
   email: () => Promise<String>;
   facebookId: () => Promise<String>;
@@ -3399,8 +3354,7 @@ export interface ProfileSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   oldId: () => Promise<AsyncIterator<ID_Output>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
+  fullName: () => Promise<AsyncIterator<String>>;
   gender: () => Promise<AsyncIterator<Boolean>>;
   email: () => Promise<AsyncIterator<String>>;
   facebookId: () => Promise<AsyncIterator<String>>;
@@ -3435,8 +3389,7 @@ export interface ProfileNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   oldId: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
+  fullName: () => Promise<String>;
   gender: () => Promise<Boolean>;
   email: () => Promise<String>;
   facebookId: () => Promise<String>;
@@ -4914,8 +4867,7 @@ export interface ProfileSubscriptionPayloadSubscription
 export interface ProfilePreviousValues {
   id: ID_Output;
   oldId: ID_Output;
-  firstName: String;
-  lastName: String;
+  fullName: String;
   gender: Boolean;
   email?: String;
   facebookId?: String;
@@ -4934,8 +4886,7 @@ export interface ProfilePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   oldId: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
+  fullName: () => Promise<String>;
   gender: () => Promise<Boolean>;
   email: () => Promise<String>;
   facebookId: () => Promise<String>;
@@ -4954,8 +4905,7 @@ export interface ProfilePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   oldId: () => Promise<AsyncIterator<ID_Output>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
+  fullName: () => Promise<AsyncIterator<String>>;
   gender: () => Promise<AsyncIterator<Boolean>>;
   email: () => Promise<AsyncIterator<String>>;
   facebookId: () => Promise<AsyncIterator<String>>;

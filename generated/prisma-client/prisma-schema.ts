@@ -1866,8 +1866,7 @@ type PageInfo {
 type Profile {
   id: ID!
   oldId: ID!
-  firstName: String!
-  lastName: String!
+  fullName: String!
   gender: Boolean!
   email: String
   facebookId: String
@@ -1896,8 +1895,7 @@ type ProfileConnection {
 input ProfileCreateInput {
   id: ID
   oldId: ID!
-  firstName: String!
-  lastName: String!
+  fullName: String!
   gender: Boolean!
   email: String
   facebookId: String
@@ -1943,8 +1941,7 @@ input ProfileCreateOneWithoutLeaderInput {
 input ProfileCreateWithoutAttendancesInput {
   id: ID
   oldId: ID!
-  firstName: String!
-  lastName: String!
+  fullName: String!
   gender: Boolean!
   email: String
   facebookId: String
@@ -1964,8 +1961,7 @@ input ProfileCreateWithoutAttendancesInput {
 input ProfileCreateWithoutGroupInput {
   id: ID
   oldId: ID!
-  firstName: String!
-  lastName: String!
+  fullName: String!
   gender: Boolean!
   email: String
   facebookId: String
@@ -1985,8 +1981,7 @@ input ProfileCreateWithoutGroupInput {
 input ProfileCreateWithoutLeaderInput {
   id: ID
   oldId: ID!
-  firstName: String!
-  lastName: String!
+  fullName: String!
   gender: Boolean!
   email: String
   facebookId: String
@@ -2006,8 +2001,7 @@ input ProfileCreateWithoutLeaderInput {
 input ProfileCreateWithoutMemberTypeInput {
   id: ID
   oldId: ID!
-  firstName: String!
-  lastName: String!
+  fullName: String!
   gender: Boolean!
   email: String
   facebookId: String
@@ -2034,10 +2028,8 @@ enum ProfileOrderByInput {
   id_DESC
   oldId_ASC
   oldId_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
+  fullName_ASC
+  fullName_DESC
   gender_ASC
   gender_DESC
   email_ASC
@@ -2065,8 +2057,7 @@ enum ProfileOrderByInput {
 type ProfilePreviousValues {
   id: ID!
   oldId: ID!
-  firstName: String!
-  lastName: String!
+  fullName: String!
   gender: Boolean!
   email: String
   facebookId: String
@@ -2109,34 +2100,20 @@ input ProfileScalarWhereInput {
   oldId_not_starts_with: ID
   oldId_ends_with: ID
   oldId_not_ends_with: ID
-  firstName: String
-  firstName_not: String
-  firstName_in: [String!]
-  firstName_not_in: [String!]
-  firstName_lt: String
-  firstName_lte: String
-  firstName_gt: String
-  firstName_gte: String
-  firstName_contains: String
-  firstName_not_contains: String
-  firstName_starts_with: String
-  firstName_not_starts_with: String
-  firstName_ends_with: String
-  firstName_not_ends_with: String
-  lastName: String
-  lastName_not: String
-  lastName_in: [String!]
-  lastName_not_in: [String!]
-  lastName_lt: String
-  lastName_lte: String
-  lastName_gt: String
-  lastName_gte: String
-  lastName_contains: String
-  lastName_not_contains: String
-  lastName_starts_with: String
-  lastName_not_starts_with: String
-  lastName_ends_with: String
-  lastName_not_ends_with: String
+  fullName: String
+  fullName_not: String
+  fullName_in: [String!]
+  fullName_not_in: [String!]
+  fullName_lt: String
+  fullName_lte: String
+  fullName_gt: String
+  fullName_gte: String
+  fullName_contains: String
+  fullName_not_contains: String
+  fullName_starts_with: String
+  fullName_not_starts_with: String
+  fullName_ends_with: String
+  fullName_not_ends_with: String
   gender: Boolean
   gender_not: Boolean
   email: String
@@ -2262,8 +2239,7 @@ input ProfileSubscriptionWhereInput {
 
 input ProfileUpdateDataInput {
   oldId: ID
-  firstName: String
-  lastName: String
+  fullName: String
   gender: Boolean
   email: String
   facebookId: String
@@ -2283,8 +2259,7 @@ input ProfileUpdateDataInput {
 
 input ProfileUpdateInput {
   oldId: ID
-  firstName: String
-  lastName: String
+  fullName: String
   gender: Boolean
   email: String
   facebookId: String
@@ -2304,8 +2279,7 @@ input ProfileUpdateInput {
 
 input ProfileUpdateManyDataInput {
   oldId: ID
-  firstName: String
-  lastName: String
+  fullName: String
   gender: Boolean
   email: String
   facebookId: String
@@ -2319,8 +2293,7 @@ input ProfileUpdateManyDataInput {
 
 input ProfileUpdateManyMutationInput {
   oldId: ID
-  firstName: String
-  lastName: String
+  fullName: String
   gender: Boolean
   email: String
   facebookId: String
@@ -2388,8 +2361,7 @@ input ProfileUpdateOneWithoutLeaderInput {
 
 input ProfileUpdateWithoutAttendancesDataInput {
   oldId: ID
-  firstName: String
-  lastName: String
+  fullName: String
   gender: Boolean
   email: String
   facebookId: String
@@ -2408,8 +2380,7 @@ input ProfileUpdateWithoutAttendancesDataInput {
 
 input ProfileUpdateWithoutGroupDataInput {
   oldId: ID
-  firstName: String
-  lastName: String
+  fullName: String
   gender: Boolean
   email: String
   facebookId: String
@@ -2428,8 +2399,7 @@ input ProfileUpdateWithoutGroupDataInput {
 
 input ProfileUpdateWithoutLeaderDataInput {
   oldId: ID
-  firstName: String
-  lastName: String
+  fullName: String
   gender: Boolean
   email: String
   facebookId: String
@@ -2448,8 +2418,7 @@ input ProfileUpdateWithoutLeaderDataInput {
 
 input ProfileUpdateWithoutMemberTypeDataInput {
   oldId: ID
-  firstName: String
-  lastName: String
+  fullName: String
   gender: Boolean
   email: String
   facebookId: String
@@ -2532,34 +2501,20 @@ input ProfileWhereInput {
   oldId_not_starts_with: ID
   oldId_ends_with: ID
   oldId_not_ends_with: ID
-  firstName: String
-  firstName_not: String
-  firstName_in: [String!]
-  firstName_not_in: [String!]
-  firstName_lt: String
-  firstName_lte: String
-  firstName_gt: String
-  firstName_gte: String
-  firstName_contains: String
-  firstName_not_contains: String
-  firstName_starts_with: String
-  firstName_not_starts_with: String
-  firstName_ends_with: String
-  firstName_not_ends_with: String
-  lastName: String
-  lastName_not: String
-  lastName_in: [String!]
-  lastName_not_in: [String!]
-  lastName_lt: String
-  lastName_lte: String
-  lastName_gt: String
-  lastName_gte: String
-  lastName_contains: String
-  lastName_not_contains: String
-  lastName_starts_with: String
-  lastName_not_starts_with: String
-  lastName_ends_with: String
-  lastName_not_ends_with: String
+  fullName: String
+  fullName_not: String
+  fullName_in: [String!]
+  fullName_not_in: [String!]
+  fullName_lt: String
+  fullName_lte: String
+  fullName_gt: String
+  fullName_gte: String
+  fullName_contains: String
+  fullName_not_contains: String
+  fullName_starts_with: String
+  fullName_not_starts_with: String
+  fullName_ends_with: String
+  fullName_not_ends_with: String
   gender: Boolean
   gender_not: Boolean
   email: String

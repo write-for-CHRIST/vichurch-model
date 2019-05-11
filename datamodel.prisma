@@ -80,7 +80,7 @@ type Group {
 	id: ID! @id
 	name: String!
 	members: [Profile] @relation(name: "GroupMembers")
-	leader: Profile @relation(link: TABLE, name: "GroupLeader")
+	leader: Profile @relation(name: "GroupLeader")
 	updatedAt: DateTime! @updatedAt
 	createdAt: DateTime! @createdAt
 }

@@ -28,4 +28,6 @@ jobs:
     - stage: deploy
       script: "yarn deploy"
     - stage: release
-      script: "yarn semantic-release"
+      script:
+          - yarn build
+          - yarn semantic-release

@@ -879,7 +879,7 @@ type AggregateGroup {
   count: Int!
 }
 
-type AggregateInternationalization {
+type AggregateLocalization {
   count: Int!
 }
 
@@ -895,7 +895,7 @@ type AggregateProvince {
   count: Int!
 }
 
-type AggregateTranslationText {
+type AggregateTranslation {
   count: Int!
 }
 
@@ -1627,95 +1627,100 @@ input GroupWhereUniqueInput {
   id: ID
 }
 
-type Internationalization {
+enum LanguageCode {
+  VI
+  EN
+}
+
+type Localization {
   id: ID!
   key: String!
-  translationTexts(where: TranslationTextWhereInput, orderBy: TranslationTextOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TranslationText!]
+  translations(where: TranslationWhereInput, orderBy: TranslationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Translation!]
 }
 
-type InternationalizationConnection {
+type LocalizationConnection {
   pageInfo: PageInfo!
-  edges: [InternationalizationEdge]!
-  aggregate: AggregateInternationalization!
+  edges: [LocalizationEdge]!
+  aggregate: AggregateLocalization!
 }
 
-input InternationalizationCreateInput {
+input LocalizationCreateInput {
   id: ID
   key: String!
-  translationTexts: TranslationTextCreateManyWithoutLocalizationInput
+  translations: TranslationCreateManyWithoutLocalizationInput
 }
 
-input InternationalizationCreateOneWithoutTranslationTextsInput {
-  create: InternationalizationCreateWithoutTranslationTextsInput
-  connect: InternationalizationWhereUniqueInput
+input LocalizationCreateOneWithoutTranslationsInput {
+  create: LocalizationCreateWithoutTranslationsInput
+  connect: LocalizationWhereUniqueInput
 }
 
-input InternationalizationCreateWithoutTranslationTextsInput {
+input LocalizationCreateWithoutTranslationsInput {
   id: ID
   key: String!
 }
 
-type InternationalizationEdge {
-  node: Internationalization!
+type LocalizationEdge {
+  node: Localization!
   cursor: String!
 }
 
-enum InternationalizationOrderByInput {
+enum LocalizationOrderByInput {
   id_ASC
   id_DESC
   key_ASC
   key_DESC
 }
 
-type InternationalizationPreviousValues {
+type LocalizationPreviousValues {
   id: ID!
   key: String!
 }
 
-type InternationalizationSubscriptionPayload {
+type LocalizationSubscriptionPayload {
   mutation: MutationType!
-  node: Internationalization
+  node: Localization
   updatedFields: [String!]
-  previousValues: InternationalizationPreviousValues
+  previousValues: LocalizationPreviousValues
 }
 
-input InternationalizationSubscriptionWhereInput {
+input LocalizationSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: InternationalizationWhereInput
-  AND: [InternationalizationSubscriptionWhereInput!]
-  OR: [InternationalizationSubscriptionWhereInput!]
-  NOT: [InternationalizationSubscriptionWhereInput!]
+  node: LocalizationWhereInput
+  AND: [LocalizationSubscriptionWhereInput!]
+  OR: [LocalizationSubscriptionWhereInput!]
+  NOT: [LocalizationSubscriptionWhereInput!]
 }
 
-input InternationalizationUpdateInput {
+input LocalizationUpdateInput {
   key: String
-  translationTexts: TranslationTextUpdateManyWithoutLocalizationInput
+  translations: TranslationUpdateManyWithoutLocalizationInput
 }
 
-input InternationalizationUpdateManyMutationInput {
-  key: String
-}
-
-input InternationalizationUpdateOneRequiredWithoutTranslationTextsInput {
-  create: InternationalizationCreateWithoutTranslationTextsInput
-  update: InternationalizationUpdateWithoutTranslationTextsDataInput
-  upsert: InternationalizationUpsertWithoutTranslationTextsInput
-  connect: InternationalizationWhereUniqueInput
-}
-
-input InternationalizationUpdateWithoutTranslationTextsDataInput {
+input LocalizationUpdateManyMutationInput {
   key: String
 }
 
-input InternationalizationUpsertWithoutTranslationTextsInput {
-  update: InternationalizationUpdateWithoutTranslationTextsDataInput!
-  create: InternationalizationCreateWithoutTranslationTextsInput!
+input LocalizationUpdateOneRequiredWithoutTranslationsInput {
+  create: LocalizationCreateWithoutTranslationsInput
+  update: LocalizationUpdateWithoutTranslationsDataInput
+  upsert: LocalizationUpsertWithoutTranslationsInput
+  connect: LocalizationWhereUniqueInput
 }
 
-input InternationalizationWhereInput {
+input LocalizationUpdateWithoutTranslationsDataInput {
+  key: String
+}
+
+input LocalizationUpsertWithoutTranslationsInput {
+  update: LocalizationUpdateWithoutTranslationsDataInput!
+  create: LocalizationCreateWithoutTranslationsInput!
+}
+
+input LocalizationWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -1744,22 +1749,17 @@ input InternationalizationWhereInput {
   key_not_starts_with: String
   key_ends_with: String
   key_not_ends_with: String
-  translationTexts_every: TranslationTextWhereInput
-  translationTexts_some: TranslationTextWhereInput
-  translationTexts_none: TranslationTextWhereInput
-  AND: [InternationalizationWhereInput!]
-  OR: [InternationalizationWhereInput!]
-  NOT: [InternationalizationWhereInput!]
+  translations_every: TranslationWhereInput
+  translations_some: TranslationWhereInput
+  translations_none: TranslationWhereInput
+  AND: [LocalizationWhereInput!]
+  OR: [LocalizationWhereInput!]
+  NOT: [LocalizationWhereInput!]
 }
 
-input InternationalizationWhereUniqueInput {
+input LocalizationWhereUniqueInput {
   id: ID
   key: String
-}
-
-enum LanguageCode {
-  VI
-  EN
 }
 
 scalar Long
@@ -1963,12 +1963,12 @@ type Mutation {
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   deleteGroup(where: GroupWhereUniqueInput!): Group
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
-  createInternationalization(data: InternationalizationCreateInput!): Internationalization!
-  updateInternationalization(data: InternationalizationUpdateInput!, where: InternationalizationWhereUniqueInput!): Internationalization
-  updateManyInternationalizations(data: InternationalizationUpdateManyMutationInput!, where: InternationalizationWhereInput): BatchPayload!
-  upsertInternationalization(where: InternationalizationWhereUniqueInput!, create: InternationalizationCreateInput!, update: InternationalizationUpdateInput!): Internationalization!
-  deleteInternationalization(where: InternationalizationWhereUniqueInput!): Internationalization
-  deleteManyInternationalizations(where: InternationalizationWhereInput): BatchPayload!
+  createLocalization(data: LocalizationCreateInput!): Localization!
+  updateLocalization(data: LocalizationUpdateInput!, where: LocalizationWhereUniqueInput!): Localization
+  updateManyLocalizations(data: LocalizationUpdateManyMutationInput!, where: LocalizationWhereInput): BatchPayload!
+  upsertLocalization(where: LocalizationWhereUniqueInput!, create: LocalizationCreateInput!, update: LocalizationUpdateInput!): Localization!
+  deleteLocalization(where: LocalizationWhereUniqueInput!): Localization
+  deleteManyLocalizations(where: LocalizationWhereInput): BatchPayload!
   createMemberType(data: MemberTypeCreateInput!): MemberType!
   updateMemberType(data: MemberTypeUpdateInput!, where: MemberTypeWhereUniqueInput!): MemberType
   updateManyMemberTypes(data: MemberTypeUpdateManyMutationInput!, where: MemberTypeWhereInput): BatchPayload!
@@ -1987,12 +1987,12 @@ type Mutation {
   upsertProvince(where: ProvinceWhereUniqueInput!, create: ProvinceCreateInput!, update: ProvinceUpdateInput!): Province!
   deleteProvince(where: ProvinceWhereUniqueInput!): Province
   deleteManyProvinces(where: ProvinceWhereInput): BatchPayload!
-  createTranslationText(data: TranslationTextCreateInput!): TranslationText!
-  updateTranslationText(data: TranslationTextUpdateInput!, where: TranslationTextWhereUniqueInput!): TranslationText
-  updateManyTranslationTexts(data: TranslationTextUpdateManyMutationInput!, where: TranslationTextWhereInput): BatchPayload!
-  upsertTranslationText(where: TranslationTextWhereUniqueInput!, create: TranslationTextCreateInput!, update: TranslationTextUpdateInput!): TranslationText!
-  deleteTranslationText(where: TranslationTextWhereUniqueInput!): TranslationText
-  deleteManyTranslationTexts(where: TranslationTextWhereInput): BatchPayload!
+  createTranslation(data: TranslationCreateInput!): Translation!
+  updateTranslation(data: TranslationUpdateInput!, where: TranslationWhereUniqueInput!): Translation
+  updateManyTranslations(data: TranslationUpdateManyMutationInput!, where: TranslationWhereInput): BatchPayload!
+  upsertTranslation(where: TranslationWhereUniqueInput!, create: TranslationCreateInput!, update: TranslationUpdateInput!): Translation!
+  deleteTranslation(where: TranslationWhereUniqueInput!): Translation
+  deleteManyTranslations(where: TranslationWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -2987,9 +2987,9 @@ type Query {
   group(where: GroupWhereUniqueInput!): Group
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
-  internationalization(where: InternationalizationWhereUniqueInput!): Internationalization
-  internationalizations(where: InternationalizationWhereInput, orderBy: InternationalizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Internationalization]!
-  internationalizationsConnection(where: InternationalizationWhereInput, orderBy: InternationalizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InternationalizationConnection!
+  localization(where: LocalizationWhereUniqueInput!): Localization
+  localizations(where: LocalizationWhereInput, orderBy: LocalizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Localization]!
+  localizationsConnection(where: LocalizationWhereInput, orderBy: LocalizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocalizationConnection!
   memberType(where: MemberTypeWhereUniqueInput!): MemberType
   memberTypes(where: MemberTypeWhereInput, orderBy: MemberTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberType]!
   memberTypesConnection(where: MemberTypeWhereInput, orderBy: MemberTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MemberTypeConnection!
@@ -2999,9 +2999,9 @@ type Query {
   province(where: ProvinceWhereUniqueInput!): Province
   provinces(where: ProvinceWhereInput, orderBy: ProvinceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Province]!
   provincesConnection(where: ProvinceWhereInput, orderBy: ProvinceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProvinceConnection!
-  translationText(where: TranslationTextWhereUniqueInput!): TranslationText
-  translationTexts(where: TranslationTextWhereInput, orderBy: TranslationTextOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TranslationText]!
-  translationTextsConnection(where: TranslationTextWhereInput, orderBy: TranslationTextOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TranslationTextConnection!
+  translation(where: TranslationWhereUniqueInput!): Translation
+  translations(where: TranslationWhereInput, orderBy: TranslationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Translation]!
+  translationsConnection(where: TranslationWhereInput, orderBy: TranslationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TranslationConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -3016,51 +3016,51 @@ type Subscription {
   commune(where: CommuneSubscriptionWhereInput): CommuneSubscriptionPayload
   district(where: DistrictSubscriptionWhereInput): DistrictSubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
-  internationalization(where: InternationalizationSubscriptionWhereInput): InternationalizationSubscriptionPayload
+  localization(where: LocalizationSubscriptionWhereInput): LocalizationSubscriptionPayload
   memberType(where: MemberTypeSubscriptionWhereInput): MemberTypeSubscriptionPayload
   profile(where: ProfileSubscriptionWhereInput): ProfileSubscriptionPayload
   province(where: ProvinceSubscriptionWhereInput): ProvinceSubscriptionPayload
-  translationText(where: TranslationTextSubscriptionWhereInput): TranslationTextSubscriptionPayload
+  translation(where: TranslationSubscriptionWhereInput): TranslationSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
-type TranslationText {
+type Translation {
   id: ID!
   lang: LanguageCode!
   text: String!
-  localization: Internationalization!
+  localization: Localization!
 }
 
-type TranslationTextConnection {
+type TranslationConnection {
   pageInfo: PageInfo!
-  edges: [TranslationTextEdge]!
-  aggregate: AggregateTranslationText!
+  edges: [TranslationEdge]!
+  aggregate: AggregateTranslation!
 }
 
-input TranslationTextCreateInput {
+input TranslationCreateInput {
   id: ID
   lang: LanguageCode!
   text: String!
-  localization: InternationalizationCreateOneWithoutTranslationTextsInput!
+  localization: LocalizationCreateOneWithoutTranslationsInput!
 }
 
-input TranslationTextCreateManyWithoutLocalizationInput {
-  create: [TranslationTextCreateWithoutLocalizationInput!]
-  connect: [TranslationTextWhereUniqueInput!]
+input TranslationCreateManyWithoutLocalizationInput {
+  create: [TranslationCreateWithoutLocalizationInput!]
+  connect: [TranslationWhereUniqueInput!]
 }
 
-input TranslationTextCreateWithoutLocalizationInput {
+input TranslationCreateWithoutLocalizationInput {
   id: ID
   lang: LanguageCode!
   text: String!
 }
 
-type TranslationTextEdge {
-  node: TranslationText!
+type TranslationEdge {
+  node: Translation!
   cursor: String!
 }
 
-enum TranslationTextOrderByInput {
+enum TranslationOrderByInput {
   id_ASC
   id_DESC
   lang_ASC
@@ -3069,13 +3069,13 @@ enum TranslationTextOrderByInput {
   text_DESC
 }
 
-type TranslationTextPreviousValues {
+type TranslationPreviousValues {
   id: ID!
   lang: LanguageCode!
   text: String!
 }
 
-input TranslationTextScalarWhereInput {
+input TranslationScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -3108,79 +3108,79 @@ input TranslationTextScalarWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
-  AND: [TranslationTextScalarWhereInput!]
-  OR: [TranslationTextScalarWhereInput!]
-  NOT: [TranslationTextScalarWhereInput!]
+  AND: [TranslationScalarWhereInput!]
+  OR: [TranslationScalarWhereInput!]
+  NOT: [TranslationScalarWhereInput!]
 }
 
-type TranslationTextSubscriptionPayload {
+type TranslationSubscriptionPayload {
   mutation: MutationType!
-  node: TranslationText
+  node: Translation
   updatedFields: [String!]
-  previousValues: TranslationTextPreviousValues
+  previousValues: TranslationPreviousValues
 }
 
-input TranslationTextSubscriptionWhereInput {
+input TranslationSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: TranslationTextWhereInput
-  AND: [TranslationTextSubscriptionWhereInput!]
-  OR: [TranslationTextSubscriptionWhereInput!]
-  NOT: [TranslationTextSubscriptionWhereInput!]
+  node: TranslationWhereInput
+  AND: [TranslationSubscriptionWhereInput!]
+  OR: [TranslationSubscriptionWhereInput!]
+  NOT: [TranslationSubscriptionWhereInput!]
 }
 
-input TranslationTextUpdateInput {
+input TranslationUpdateInput {
   lang: LanguageCode
   text: String
-  localization: InternationalizationUpdateOneRequiredWithoutTranslationTextsInput
+  localization: LocalizationUpdateOneRequiredWithoutTranslationsInput
 }
 
-input TranslationTextUpdateManyDataInput {
-  lang: LanguageCode
-  text: String
-}
-
-input TranslationTextUpdateManyMutationInput {
+input TranslationUpdateManyDataInput {
   lang: LanguageCode
   text: String
 }
 
-input TranslationTextUpdateManyWithoutLocalizationInput {
-  create: [TranslationTextCreateWithoutLocalizationInput!]
-  delete: [TranslationTextWhereUniqueInput!]
-  connect: [TranslationTextWhereUniqueInput!]
-  set: [TranslationTextWhereUniqueInput!]
-  disconnect: [TranslationTextWhereUniqueInput!]
-  update: [TranslationTextUpdateWithWhereUniqueWithoutLocalizationInput!]
-  upsert: [TranslationTextUpsertWithWhereUniqueWithoutLocalizationInput!]
-  deleteMany: [TranslationTextScalarWhereInput!]
-  updateMany: [TranslationTextUpdateManyWithWhereNestedInput!]
-}
-
-input TranslationTextUpdateManyWithWhereNestedInput {
-  where: TranslationTextScalarWhereInput!
-  data: TranslationTextUpdateManyDataInput!
-}
-
-input TranslationTextUpdateWithoutLocalizationDataInput {
+input TranslationUpdateManyMutationInput {
   lang: LanguageCode
   text: String
 }
 
-input TranslationTextUpdateWithWhereUniqueWithoutLocalizationInput {
-  where: TranslationTextWhereUniqueInput!
-  data: TranslationTextUpdateWithoutLocalizationDataInput!
+input TranslationUpdateManyWithoutLocalizationInput {
+  create: [TranslationCreateWithoutLocalizationInput!]
+  delete: [TranslationWhereUniqueInput!]
+  connect: [TranslationWhereUniqueInput!]
+  set: [TranslationWhereUniqueInput!]
+  disconnect: [TranslationWhereUniqueInput!]
+  update: [TranslationUpdateWithWhereUniqueWithoutLocalizationInput!]
+  upsert: [TranslationUpsertWithWhereUniqueWithoutLocalizationInput!]
+  deleteMany: [TranslationScalarWhereInput!]
+  updateMany: [TranslationUpdateManyWithWhereNestedInput!]
 }
 
-input TranslationTextUpsertWithWhereUniqueWithoutLocalizationInput {
-  where: TranslationTextWhereUniqueInput!
-  update: TranslationTextUpdateWithoutLocalizationDataInput!
-  create: TranslationTextCreateWithoutLocalizationInput!
+input TranslationUpdateManyWithWhereNestedInput {
+  where: TranslationScalarWhereInput!
+  data: TranslationUpdateManyDataInput!
 }
 
-input TranslationTextWhereInput {
+input TranslationUpdateWithoutLocalizationDataInput {
+  lang: LanguageCode
+  text: String
+}
+
+input TranslationUpdateWithWhereUniqueWithoutLocalizationInput {
+  where: TranslationWhereUniqueInput!
+  data: TranslationUpdateWithoutLocalizationDataInput!
+}
+
+input TranslationUpsertWithWhereUniqueWithoutLocalizationInput {
+  where: TranslationWhereUniqueInput!
+  update: TranslationUpdateWithoutLocalizationDataInput!
+  create: TranslationCreateWithoutLocalizationInput!
+}
+
+input TranslationWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -3213,13 +3213,13 @@ input TranslationTextWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
-  localization: InternationalizationWhereInput
-  AND: [TranslationTextWhereInput!]
-  OR: [TranslationTextWhereInput!]
-  NOT: [TranslationTextWhereInput!]
+  localization: LocalizationWhereInput
+  AND: [TranslationWhereInput!]
+  OR: [TranslationWhereInput!]
+  NOT: [TranslationWhereInput!]
 }
 
-input TranslationTextWhereUniqueInput {
+input TranslationWhereUniqueInput {
   id: ID
 }
 

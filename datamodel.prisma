@@ -127,5 +127,5 @@ type Translation {
 type Localization {
   id: ID! @id
   key: String! @unique
-  translations: [TranslationText!]! @relation(link: "TABLE", name: "LocalizationTranslation")
+  translations: [Translation!]! @relation(link: "TABLE", name: "LocalizationTranslation")
 }

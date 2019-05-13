@@ -25,6 +25,7 @@ export interface Exists {
   commune: (where?: CommuneWhereInput) => Promise<boolean>;
   district: (where?: DistrictWhereInput) => Promise<boolean>;
   group: (where?: GroupWhereInput) => Promise<boolean>;
+  language: (where?: LanguageWhereInput) => Promise<boolean>;
   localization: (where?: LocalizationWhereInput) => Promise<boolean>;
   memberType: (where?: MemberTypeWhereInput) => Promise<boolean>;
   profile: (where?: ProfileWhereInput) => Promise<boolean>;
@@ -191,6 +192,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => GroupConnectionPromise;
+  language: (where: LanguageWhereUniqueInput) => LanguageNullablePromise;
+  languages: (args?: {
+    where?: LanguageWhereInput;
+    orderBy?: LanguageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Language>;
+  languagesConnection: (args?: {
+    where?: LanguageWhereInput;
+    orderBy?: LanguageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => LanguageConnectionPromise;
   localization: (
     where: LocalizationWhereUniqueInput
   ) => LocalizationNullablePromise;
@@ -443,6 +463,22 @@ export interface Prisma {
   }) => GroupPromise;
   deleteGroup: (where: GroupWhereUniqueInput) => GroupPromise;
   deleteManyGroups: (where?: GroupWhereInput) => BatchPayloadPromise;
+  createLanguage: (data: LanguageCreateInput) => LanguagePromise;
+  updateLanguage: (args: {
+    data: LanguageUpdateInput;
+    where: LanguageWhereUniqueInput;
+  }) => LanguagePromise;
+  updateManyLanguages: (args: {
+    data: LanguageUpdateManyMutationInput;
+    where?: LanguageWhereInput;
+  }) => BatchPayloadPromise;
+  upsertLanguage: (args: {
+    where: LanguageWhereUniqueInput;
+    create: LanguageCreateInput;
+    update: LanguageUpdateInput;
+  }) => LanguagePromise;
+  deleteLanguage: (where: LanguageWhereUniqueInput) => LanguagePromise;
+  deleteManyLanguages: (where?: LanguageWhereInput) => BatchPayloadPromise;
   createLocalization: (data: LocalizationCreateInput) => LocalizationPromise;
   updateLocalization: (args: {
     data: LocalizationUpdateInput;
@@ -575,6 +611,9 @@ export interface Subscription {
   group: (
     where?: GroupSubscriptionWhereInput
   ) => GroupSubscriptionPayloadSubscription;
+  language: (
+    where?: LanguageSubscriptionWhereInput
+  ) => LanguageSubscriptionPayloadSubscription;
   localization: (
     where?: LocalizationSubscriptionWhereInput
   ) => LocalizationSubscriptionPayloadSubscription;
@@ -707,15 +746,19 @@ export type GroupOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC";
 
-export type LanguageCode = "VI" | "EN";
-
 export type TranslationOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "lang_ASC"
-  | "lang_DESC"
   | "text_ASC"
   | "text_DESC";
+
+export type LanguageOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "code_ASC"
+  | "code_DESC"
+  | "name_ASC"
+  | "name_DESC";
 
 export type LocalizationOrderByInput =
   | "id_ASC"
@@ -1426,9 +1469,9 @@ export type GroupWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export type LocalizationWhereUniqueInput = AtLeastOne<{
+export type LanguageWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  key?: Maybe<String>;
+  code?: Maybe<String>;
 }>;
 
 export interface TranslationWhereInput {
@@ -1446,10 +1489,6 @@ export interface TranslationWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  lang?: Maybe<LanguageCode>;
-  lang_not?: Maybe<LanguageCode>;
-  lang_in?: Maybe<LanguageCode[] | LanguageCode>;
-  lang_not_in?: Maybe<LanguageCode[] | LanguageCode>;
   text?: Maybe<String>;
   text_not?: Maybe<String>;
   text_in?: Maybe<String[] | String>;
@@ -1464,10 +1503,62 @@ export interface TranslationWhereInput {
   text_not_starts_with?: Maybe<String>;
   text_ends_with?: Maybe<String>;
   text_not_ends_with?: Maybe<String>;
+  language?: Maybe<LanguageWhereInput>;
   localization?: Maybe<LocalizationWhereInput>;
   AND?: Maybe<TranslationWhereInput[] | TranslationWhereInput>;
   OR?: Maybe<TranslationWhereInput[] | TranslationWhereInput>;
   NOT?: Maybe<TranslationWhereInput[] | TranslationWhereInput>;
+}
+
+export interface LanguageWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  code?: Maybe<String>;
+  code_not?: Maybe<String>;
+  code_in?: Maybe<String[] | String>;
+  code_not_in?: Maybe<String[] | String>;
+  code_lt?: Maybe<String>;
+  code_lte?: Maybe<String>;
+  code_gt?: Maybe<String>;
+  code_gte?: Maybe<String>;
+  code_contains?: Maybe<String>;
+  code_not_contains?: Maybe<String>;
+  code_starts_with?: Maybe<String>;
+  code_not_starts_with?: Maybe<String>;
+  code_ends_with?: Maybe<String>;
+  code_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  translation_every?: Maybe<TranslationWhereInput>;
+  translation_some?: Maybe<TranslationWhereInput>;
+  translation_none?: Maybe<TranslationWhereInput>;
+  AND?: Maybe<LanguageWhereInput[] | LanguageWhereInput>;
+  OR?: Maybe<LanguageWhereInput[] | LanguageWhereInput>;
+  NOT?: Maybe<LanguageWhereInput[] | LanguageWhereInput>;
 }
 
 export interface LocalizationWhereInput {
@@ -1506,6 +1597,11 @@ export interface LocalizationWhereInput {
   OR?: Maybe<LocalizationWhereInput[] | LocalizationWhereInput>;
   NOT?: Maybe<LocalizationWhereInput[] | LocalizationWhereInput>;
 }
+
+export type LocalizationWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  key?: Maybe<String>;
+}>;
 
 export type MemberTypeWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -2934,6 +3030,153 @@ export interface GroupUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
+export interface LanguageCreateInput {
+  id?: Maybe<ID_Input>;
+  code: String;
+  name: String;
+  translation?: Maybe<TranslationCreateManyWithoutLanguageInput>;
+}
+
+export interface TranslationCreateManyWithoutLanguageInput {
+  create?: Maybe<
+    | TranslationCreateWithoutLanguageInput[]
+    | TranslationCreateWithoutLanguageInput
+  >;
+  connect?: Maybe<TranslationWhereUniqueInput[] | TranslationWhereUniqueInput>;
+}
+
+export interface TranslationCreateWithoutLanguageInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  localization?: Maybe<LocalizationCreateOneWithoutTranslationsInput>;
+}
+
+export interface LocalizationCreateOneWithoutTranslationsInput {
+  create?: Maybe<LocalizationCreateWithoutTranslationsInput>;
+  connect?: Maybe<LocalizationWhereUniqueInput>;
+}
+
+export interface LocalizationCreateWithoutTranslationsInput {
+  id?: Maybe<ID_Input>;
+  key: String;
+}
+
+export interface LanguageUpdateInput {
+  code?: Maybe<String>;
+  name?: Maybe<String>;
+  translation?: Maybe<TranslationUpdateManyWithoutLanguageInput>;
+}
+
+export interface TranslationUpdateManyWithoutLanguageInput {
+  create?: Maybe<
+    | TranslationCreateWithoutLanguageInput[]
+    | TranslationCreateWithoutLanguageInput
+  >;
+  delete?: Maybe<TranslationWhereUniqueInput[] | TranslationWhereUniqueInput>;
+  connect?: Maybe<TranslationWhereUniqueInput[] | TranslationWhereUniqueInput>;
+  set?: Maybe<TranslationWhereUniqueInput[] | TranslationWhereUniqueInput>;
+  disconnect?: Maybe<
+    TranslationWhereUniqueInput[] | TranslationWhereUniqueInput
+  >;
+  update?: Maybe<
+    | TranslationUpdateWithWhereUniqueWithoutLanguageInput[]
+    | TranslationUpdateWithWhereUniqueWithoutLanguageInput
+  >;
+  upsert?: Maybe<
+    | TranslationUpsertWithWhereUniqueWithoutLanguageInput[]
+    | TranslationUpsertWithWhereUniqueWithoutLanguageInput
+  >;
+  deleteMany?: Maybe<
+    TranslationScalarWhereInput[] | TranslationScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | TranslationUpdateManyWithWhereNestedInput[]
+    | TranslationUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TranslationUpdateWithWhereUniqueWithoutLanguageInput {
+  where: TranslationWhereUniqueInput;
+  data: TranslationUpdateWithoutLanguageDataInput;
+}
+
+export interface TranslationUpdateWithoutLanguageDataInput {
+  text?: Maybe<String>;
+  localization?: Maybe<LocalizationUpdateOneWithoutTranslationsInput>;
+}
+
+export interface LocalizationUpdateOneWithoutTranslationsInput {
+  create?: Maybe<LocalizationCreateWithoutTranslationsInput>;
+  update?: Maybe<LocalizationUpdateWithoutTranslationsDataInput>;
+  upsert?: Maybe<LocalizationUpsertWithoutTranslationsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<LocalizationWhereUniqueInput>;
+}
+
+export interface LocalizationUpdateWithoutTranslationsDataInput {
+  key?: Maybe<String>;
+}
+
+export interface LocalizationUpsertWithoutTranslationsInput {
+  update: LocalizationUpdateWithoutTranslationsDataInput;
+  create: LocalizationCreateWithoutTranslationsInput;
+}
+
+export interface TranslationUpsertWithWhereUniqueWithoutLanguageInput {
+  where: TranslationWhereUniqueInput;
+  update: TranslationUpdateWithoutLanguageDataInput;
+  create: TranslationCreateWithoutLanguageInput;
+}
+
+export interface TranslationScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  AND?: Maybe<TranslationScalarWhereInput[] | TranslationScalarWhereInput>;
+  OR?: Maybe<TranslationScalarWhereInput[] | TranslationScalarWhereInput>;
+  NOT?: Maybe<TranslationScalarWhereInput[] | TranslationScalarWhereInput>;
+}
+
+export interface TranslationUpdateManyWithWhereNestedInput {
+  where: TranslationScalarWhereInput;
+  data: TranslationUpdateManyDataInput;
+}
+
+export interface TranslationUpdateManyDataInput {
+  text?: Maybe<String>;
+}
+
+export interface LanguageUpdateManyMutationInput {
+  code?: Maybe<String>;
+  name?: Maybe<String>;
+}
+
 export interface LocalizationCreateInput {
   id?: Maybe<ID_Input>;
   key: String;
@@ -2950,8 +3193,19 @@ export interface TranslationCreateManyWithoutLocalizationInput {
 
 export interface TranslationCreateWithoutLocalizationInput {
   id?: Maybe<ID_Input>;
-  lang: LanguageCode;
   text: String;
+  language?: Maybe<LanguageCreateOneWithoutTranslationInput>;
+}
+
+export interface LanguageCreateOneWithoutTranslationInput {
+  create?: Maybe<LanguageCreateWithoutTranslationInput>;
+  connect?: Maybe<LanguageWhereUniqueInput>;
+}
+
+export interface LanguageCreateWithoutTranslationInput {
+  id?: Maybe<ID_Input>;
+  code: String;
+  name: String;
 }
 
 export interface LocalizationUpdateInput {
@@ -2993,62 +3247,33 @@ export interface TranslationUpdateWithWhereUniqueWithoutLocalizationInput {
 }
 
 export interface TranslationUpdateWithoutLocalizationDataInput {
-  lang?: Maybe<LanguageCode>;
   text?: Maybe<String>;
+  language?: Maybe<LanguageUpdateOneWithoutTranslationInput>;
+}
+
+export interface LanguageUpdateOneWithoutTranslationInput {
+  create?: Maybe<LanguageCreateWithoutTranslationInput>;
+  update?: Maybe<LanguageUpdateWithoutTranslationDataInput>;
+  upsert?: Maybe<LanguageUpsertWithoutTranslationInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<LanguageWhereUniqueInput>;
+}
+
+export interface LanguageUpdateWithoutTranslationDataInput {
+  code?: Maybe<String>;
+  name?: Maybe<String>;
+}
+
+export interface LanguageUpsertWithoutTranslationInput {
+  update: LanguageUpdateWithoutTranslationDataInput;
+  create: LanguageCreateWithoutTranslationInput;
 }
 
 export interface TranslationUpsertWithWhereUniqueWithoutLocalizationInput {
   where: TranslationWhereUniqueInput;
   update: TranslationUpdateWithoutLocalizationDataInput;
   create: TranslationCreateWithoutLocalizationInput;
-}
-
-export interface TranslationScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  lang?: Maybe<LanguageCode>;
-  lang_not?: Maybe<LanguageCode>;
-  lang_in?: Maybe<LanguageCode[] | LanguageCode>;
-  lang_not_in?: Maybe<LanguageCode[] | LanguageCode>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  AND?: Maybe<TranslationScalarWhereInput[] | TranslationScalarWhereInput>;
-  OR?: Maybe<TranslationScalarWhereInput[] | TranslationScalarWhereInput>;
-  NOT?: Maybe<TranslationScalarWhereInput[] | TranslationScalarWhereInput>;
-}
-
-export interface TranslationUpdateManyWithWhereNestedInput {
-  where: TranslationScalarWhereInput;
-  data: TranslationUpdateManyDataInput;
-}
-
-export interface TranslationUpdateManyDataInput {
-  lang?: Maybe<LanguageCode>;
-  text?: Maybe<String>;
 }
 
 export interface LocalizationUpdateManyMutationInput {
@@ -3216,45 +3441,18 @@ export interface ProvinceUpdateManyMutationInput {
 
 export interface TranslationCreateInput {
   id?: Maybe<ID_Input>;
-  lang: LanguageCode;
   text: String;
-  localization: LocalizationCreateOneWithoutTranslationsInput;
-}
-
-export interface LocalizationCreateOneWithoutTranslationsInput {
-  create?: Maybe<LocalizationCreateWithoutTranslationsInput>;
-  connect?: Maybe<LocalizationWhereUniqueInput>;
-}
-
-export interface LocalizationCreateWithoutTranslationsInput {
-  id?: Maybe<ID_Input>;
-  key: String;
+  language?: Maybe<LanguageCreateOneWithoutTranslationInput>;
+  localization?: Maybe<LocalizationCreateOneWithoutTranslationsInput>;
 }
 
 export interface TranslationUpdateInput {
-  lang?: Maybe<LanguageCode>;
   text?: Maybe<String>;
-  localization?: Maybe<LocalizationUpdateOneRequiredWithoutTranslationsInput>;
-}
-
-export interface LocalizationUpdateOneRequiredWithoutTranslationsInput {
-  create?: Maybe<LocalizationCreateWithoutTranslationsInput>;
-  update?: Maybe<LocalizationUpdateWithoutTranslationsDataInput>;
-  upsert?: Maybe<LocalizationUpsertWithoutTranslationsInput>;
-  connect?: Maybe<LocalizationWhereUniqueInput>;
-}
-
-export interface LocalizationUpdateWithoutTranslationsDataInput {
-  key?: Maybe<String>;
-}
-
-export interface LocalizationUpsertWithoutTranslationsInput {
-  update: LocalizationUpdateWithoutTranslationsDataInput;
-  create: LocalizationCreateWithoutTranslationsInput;
+  language?: Maybe<LanguageUpdateOneWithoutTranslationInput>;
+  localization?: Maybe<LocalizationUpdateOneWithoutTranslationsInput>;
 }
 
 export interface TranslationUpdateManyMutationInput {
-  lang?: Maybe<LanguageCode>;
   text?: Maybe<String>;
 }
 
@@ -3424,6 +3622,21 @@ export interface GroupSubscriptionWhereInput {
   AND?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
   OR?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
   NOT?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
+}
+
+export interface LanguageSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<LanguageWhereInput>;
+  AND?: Maybe<
+    LanguageSubscriptionWhereInput[] | LanguageSubscriptionWhereInput
+  >;
+  OR?: Maybe<LanguageSubscriptionWhereInput[] | LanguageSubscriptionWhereInput>;
+  NOT?: Maybe<
+    LanguageSubscriptionWhereInput[] | LanguageSubscriptionWhereInput
+  >;
 }
 
 export interface LocalizationSubscriptionWhereInput {
@@ -4538,6 +4751,91 @@ export interface AggregateGroupSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface Language {
+  id: ID_Output;
+  code: String;
+  name: String;
+}
+
+export interface LanguagePromise extends Promise<Language>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  code: () => Promise<String>;
+  name: () => Promise<String>;
+  translation: <T = FragmentableArray<Translation>>(args?: {
+    where?: TranslationWhereInput;
+    orderBy?: TranslationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface LanguageSubscription
+  extends Promise<AsyncIterator<Language>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  code: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  translation: <T = Promise<AsyncIterator<TranslationSubscription>>>(args?: {
+    where?: TranslationWhereInput;
+    orderBy?: TranslationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface LanguageNullablePromise
+  extends Promise<Language | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  code: () => Promise<String>;
+  name: () => Promise<String>;
+  translation: <T = FragmentableArray<Translation>>(args?: {
+    where?: TranslationWhereInput;
+    orderBy?: TranslationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Translation {
+  id: ID_Output;
+  text: String;
+}
+
+export interface TranslationPromise extends Promise<Translation>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  language: <T = LanguagePromise>() => T;
+  localization: <T = LocalizationPromise>() => T;
+}
+
+export interface TranslationSubscription
+  extends Promise<AsyncIterator<Translation>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  language: <T = LanguageSubscription>() => T;
+  localization: <T = LocalizationSubscription>() => T;
+}
+
+export interface TranslationNullablePromise
+  extends Promise<Translation | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  language: <T = LanguagePromise>() => T;
+  localization: <T = LocalizationPromise>() => T;
+}
+
 export interface Localization {
   id: ID_Output;
   key: String;
@@ -4591,35 +4889,60 @@ export interface LocalizationNullablePromise
   }) => T;
 }
 
-export interface Translation {
-  id: ID_Output;
-  lang: LanguageCode;
-  text: String;
+export interface LanguageConnection {
+  pageInfo: PageInfo;
+  edges: LanguageEdge[];
 }
 
-export interface TranslationPromise extends Promise<Translation>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  lang: () => Promise<LanguageCode>;
-  text: () => Promise<String>;
-  localization: <T = LocalizationPromise>() => T;
-}
-
-export interface TranslationSubscription
-  extends Promise<AsyncIterator<Translation>>,
+export interface LanguageConnectionPromise
+  extends Promise<LanguageConnection>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  lang: () => Promise<AsyncIterator<LanguageCode>>;
-  text: () => Promise<AsyncIterator<String>>;
-  localization: <T = LocalizationSubscription>() => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LanguageEdge>>() => T;
+  aggregate: <T = AggregateLanguagePromise>() => T;
 }
 
-export interface TranslationNullablePromise
-  extends Promise<Translation | null>,
+export interface LanguageConnectionSubscription
+  extends Promise<AsyncIterator<LanguageConnection>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  lang: () => Promise<LanguageCode>;
-  text: () => Promise<String>;
-  localization: <T = LocalizationPromise>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LanguageEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLanguageSubscription>() => T;
+}
+
+export interface LanguageEdge {
+  node: Language;
+  cursor: String;
+}
+
+export interface LanguageEdgePromise
+  extends Promise<LanguageEdge>,
+    Fragmentable {
+  node: <T = LanguagePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface LanguageEdgeSubscription
+  extends Promise<AsyncIterator<LanguageEdge>>,
+    Fragmentable {
+  node: <T = LanguageSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateLanguage {
+  count: Int;
+}
+
+export interface AggregateLanguagePromise
+  extends Promise<AggregateLanguage>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateLanguageSubscription
+  extends Promise<AsyncIterator<AggregateLanguage>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface LocalizationConnection {
@@ -5373,6 +5696,53 @@ export interface GroupPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface LanguageSubscriptionPayload {
+  mutation: MutationType;
+  node: Language;
+  updatedFields: String[];
+  previousValues: LanguagePreviousValues;
+}
+
+export interface LanguageSubscriptionPayloadPromise
+  extends Promise<LanguageSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = LanguagePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = LanguagePreviousValuesPromise>() => T;
+}
+
+export interface LanguageSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<LanguageSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = LanguageSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = LanguagePreviousValuesSubscription>() => T;
+}
+
+export interface LanguagePreviousValues {
+  id: ID_Output;
+  code: String;
+  name: String;
+}
+
+export interface LanguagePreviousValuesPromise
+  extends Promise<LanguagePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  code: () => Promise<String>;
+  name: () => Promise<String>;
+}
+
+export interface LanguagePreviousValuesSubscription
+  extends Promise<AsyncIterator<LanguagePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  code: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
 export interface LocalizationSubscriptionPayload {
   mutation: MutationType;
   node: Localization;
@@ -5624,7 +5994,6 @@ export interface TranslationSubscriptionPayloadSubscription
 
 export interface TranslationPreviousValues {
   id: ID_Output;
-  lang: LanguageCode;
   text: String;
 }
 
@@ -5632,7 +6001,6 @@ export interface TranslationPreviousValuesPromise
   extends Promise<TranslationPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  lang: () => Promise<LanguageCode>;
   text: () => Promise<String>;
 }
 
@@ -5640,7 +6008,6 @@ export interface TranslationPreviousValuesSubscription
   extends Promise<AsyncIterator<TranslationPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  lang: () => Promise<AsyncIterator<LanguageCode>>;
   text: () => Promise<AsyncIterator<String>>;
 }
 
@@ -5786,7 +6153,7 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "LanguageCode",
+    name: "Language",
     embedded: false
   },
   {

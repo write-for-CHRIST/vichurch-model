@@ -12,7 +12,7 @@ type User {
 type Profile {
 	id: ID! @id
 	oldId: ID! @unique
-  fullName: String!
+    fullName: String!
 	gender: Boolean!
 	email: String
 	facebookId: String
@@ -112,20 +112,22 @@ type ActivityAttendance {
 	createdAt: DateTime! @createdAt
 }
 
-enum LanguageCode {
-  VI,
-  EN
+type Language {
+    id: ID! @id
+    code: String! @unique
+    name: String!
+    translation: [Translation!] @relation(name: "TranslationLanguage")
 }
 
 type Translation {
-  id: ID! @id
-  lang: LanguageCode!
-  text: String!
-  localization: Localization! @relation(name: "LocalizationTranslation")
+    id: ID! @id
+    text: String!
+    language: Language @relation(link: TABLE, name: "TranslationLanguage")
+    localization: Localization @relation(link: TABLE, name: "TranslationLocalization")
 }
 
 type Localization {
-  id: ID! @id
-  key: String! @unique
-  translations: [Translation!]! @relation(link: "TABLE", name: "LocalizationTranslation")
+    id: ID! @id
+    key: String! @unique
+    translations: [Translation!] @relation(name: "TranslationLocalization")
 }

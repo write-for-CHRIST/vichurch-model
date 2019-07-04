@@ -1,5 +1,4 @@
-#endpoint: https://prisma.btngiadinh.com/vichurch-btngiadinh/dev
-endpoint: https://prisma.btngiadinh.com/vichurch-btngiadinh/dev
+endpoint: ${PRISMA_ENDPOINT}
 
 datamodel: datamodel.prisma
 

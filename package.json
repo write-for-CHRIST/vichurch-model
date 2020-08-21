@@ -17,13 +17,13 @@
     "release": "yarn run build && yarn publish"
   },
   "dependencies": {
-    "graphql": "14.1.1",
+    "graphql": "14.7.0",
     "prisma-client-lib": "1.26.3"
   },
   "devDependencies": {
     "@semantic-release/changelog": "3.0.2",
     "@semantic-release/github": "5.2.10",
-    "@types/graphql": "14.0.5",
+    "@types/graphql": "14.2.3",
     "@types/ws": "6.0.1",
     "semantic-release": "15.13.3",
     "ts-node": "8.0.2",
